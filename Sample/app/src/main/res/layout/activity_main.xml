@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dbTextDisc"
+            style="@style/TextButtonStyle"
+            android:onClick="databaseClick"
+            android:text="@string/db_disc" />
+
+        <View style="@style/DividerStyle" />
+
+        <TextView
+            android:id="@+id/dbTextAssets"
+            style="@style/TextButtonStyle"
+            android:onClick="databaseClick"
+            android:text="@string/db_assets" />
+
+        <View style="@style/DividerStyle" />
+
+        <TextView
+            android:id="@+id/dbTextLocal"
+            style="@style/TextButtonStyle"
+            android:onClick="databaseClick"
+            android:text="@string/db_local" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View style="@style/DividerStyle" />
+
+        <TextView
+            style="@style/TextButtonStyle"
+            android:gravity="center"
+            android:onClick="compareClick"
+            android:text="@string/compare_databases" />
+    </LinearLayout>
+</RelativeLayout>

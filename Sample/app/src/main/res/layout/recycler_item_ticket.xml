@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/ticketText"
+        style="@style/TextButtonStyle"
+        android:layout_toLeftOf="@+id/deleteText" />
+
+    <TextView
+        android:id="@+id/deleteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ticketText"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/ticketText"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_medium"
+        android:text="@string/delete"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/text_size_small" />
+
+</RelativeLayout>

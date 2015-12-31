@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">DatabaseManager</string>
+
+    <string name="add_ticket">Add New Ticket</string>
+    <string name="read_only">ReadOnly!</string>
+    <string name="delete">Delete</string>
+
+    <string name="db_local">Local Database</string>
+    <string name="db_assets">Assets Database</string>
+    <string name="db_disc">Disc Database</string>
+
+    <string name="compare_databases">Compare databases in DISC and in Assets,\nFind tickets in Disc but not in Assets</string>
+
+    <string name="toast_no_ticket">No Tickets Yet!</string>
+    <string name="toast_no_difference">No Difference Found!</string>
+
+</resources>
