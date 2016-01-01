@@ -163,8 +163,9 @@ public class Database {
         }
 
         /**
-         * This will only be used if you set the required database as in DISC type,
-         * and it is SQLiteDatabase.OPEN_READWRITE as default
+         * This will be used to determine the required database object needs to open as readOnly
+         * or writable as well. It accepts {@link SQLiteDatabase#OPEN_READONLY} ||
+         * {@link SQLiteDatabase#OPEN_READWRITE} while READWRITE as default
          */
         public Builder openFlags(int flags) {
             this.openFlags = flags;
