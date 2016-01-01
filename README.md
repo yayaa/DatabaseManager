@@ -47,12 +47,24 @@ If you create database object with Database.DISC type, then you do not need to s
 ```java 
 .path(String path)
 ```
-This must be called while declaring database with `Database.DISC` type, not obligatory with `Database.LOCAL` type. But if you are going to use `getByMerged` or its derivatives, library will need your databases path to attach it to the query, so only then you need to set path with local type as well.
+This must be called while declaring database with `Database.DISC` type, not obligatory with `Database.LOCAL` type. But if you are going to use `getByMerged` or its derivatives, library will need your databases path to attach it to the query, so only then you need to set path with local type as well. 
+
+And if you need to declare your path with `Database.LOCAL` type, you may find the path such as:
+```java 
+LOCAL: context.getDatabasePath(databaseName).getPath();
+ASSETS: (via asset-helper library) context.getApplicationInfo().dataDir + "/databases/" + databaseName; 
+```
+Meanwhile, if your database is not saved in DISC nor as it is LOCAL, but in ASSETS folder then i would suggest you to use [Android-Sqlite-Asset-Helper-Library][3]
 
 ```java 
 .openFlags(int flags)
 ```
 Via this method, you can determine database to open as readOnly or readWrite. But be aware, library will accept only `SQLiteDatabase.OPEN_READWRITE` and `SQLiteDatabase.OPEN_READONLY` flags. As default, library will open databases with `SQLiteDatabase.OPEN_READWRITE` flag.
+
+```html 
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+``` 
+If you are going to read database from DISC, do not forget to add this permission to the manifest file.
 
 **Query**
 
@@ -95,7 +107,7 @@ private QueryListener<CustomObject> queryListener = new QueryListener<>() {
 ```
 QueryListener has 2 different constructor: one is default no args and the other with a boolean which indicates that the listener needs to return objects as in list, even if there is single object to return.
 
-QueryListener injects data to required objects. So while you define your custom object, you need to have variables with same name in table's column or you need to have `@ColumnName("Column")` declared above your variables. So that library can deserialize it.
+QueryListener injects data to required objects. So while you define your custom object, you need to have variables with same name in table's column or you need to have `@ColumnName("Column")` declared above your variables. So that library can deserialize it. Important: CustomOBject HAS to default no args contructor! Otherwise deserialization will not work.
 
 ```java 
 public class CustomObject {
@@ -123,6 +135,21 @@ Finally you can call variaty of methods in DatabaseManager, just pick up which o
     
     public void selectByMerged(Query query, String databaseTagToMerge);
     
+    public <T> ArrayList<T> selectByMergedSync(Class<T> clazz, Query query, String databaseTagToMerge);
+    
+    public void deleteAndInsert(Query deleteQuery, Query insertQuery);
+    
+    public void insert(Query query);
+    
+    public long insertSync(Query query);
+    
+    public void update(Query query);
+    
+    public int updateSync(Query query);
+    
+    public void delete(Query query);
+    
+    public int deleteSync(Query query);
 ```
 
 ## Download
@@ -161,3 +188,4 @@ THE SOFTWARE.
 
 [1]: https://github.com/realm/realm-java
 [2]: https://github.com/yayaa/DatabaseManager/blob/master/Sample/app/src/main/java/com/yayandroid/databasemanager/sample/SampleApplication.java
+[3]: https://github.com/jgilfelt/android-sqlite-asset-helper
