@@ -54,7 +54,7 @@ And if you need to declare your path with `Database.LOCAL` type, you may find th
 LOCAL: context.getDatabasePath(databaseName).getPath();
 ASSETS: (via asset-helper library) context.getApplicationInfo().dataDir + "/databases/" + databaseName; 
 ```
-Meanwhile, if your database is not saved in DISC nor as it is LOCAL, but in ASSETS folder then i would suggest you to use [Android-Sqlite-Asset-Helper-Library][3]
+By the way, if your database is not saved in DISC nor as it is LOCAL, but in ASSETS folder then i would suggest you to use [Android-Sqlite-Asset-Helper-Library][3]
 
 ```java 
 .openFlags(int flags)
