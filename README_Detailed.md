@@ -51,8 +51,11 @@ This must be called while declaring database with `Database.DISC` type, not obli
 
 And if you need to declare your path with `Database.LOCAL` type, you may find the path such as:
 ```java 
-LOCAL: context.getDatabasePath(databaseName).getPath();
-ASSETS: (via asset-helper library) context.getApplicationInfo().dataDir + "/databases/" + databaseName; 
+// if local database 
+context.getDatabasePath(databaseName).getPath();
+
+// if database in assets folder (via Android-Sqlite-Asset-Helper)
+context.getApplicationInfo().dataDir + "/databases/" + databaseName; 
 ```
 By the way, if your database is not saved in DISC nor as it is LOCAL, but in ASSETS folder then i would suggest you to use [Android-Sqlite-Asset-Helper-Library][3]
 
@@ -68,7 +71,7 @@ If you are going to read database from DISC, do not forget to add this permissio
 
 **Query**
 
-Create a Query object and pass that to relevant method in DatabaseManager and it will take care of the rest. Query object does not have builder pattern, but still uses chaning so you can link all methods to each other to create more readable code pattern.
+Create a Query object and pass that to relevant method in DatabaseManager and it will take care of the rest. Query object does not have builder pattern, but still uses chaining so you can link all methods to each other to create more readable code pattern.
 
 ```java 
 new Query(databaseTag)
