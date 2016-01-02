@@ -106,12 +106,18 @@ private QueryListener<CustomObject> queryListener = new QueryListener<>() {
     }
     
     public void noDataFound() { }
+    
+    public boolean manualInjection(CustomObject object, Cursor cursor) {
+          return false;
+    }
 
 };
 ```
 QueryListener has 2 different constructor: one is default no args and the other with a boolean which indicates that the listener needs to return objects as in list, even if there is single object to return.
 
 QueryListener injects data to required objects. So while you define your custom object, you need to have variables with same name in table's column or you need to have `@ColumnName("Column")` declared above your variables. So that library can deserialize it. Important: CustomOBject HAS to default no args contructor! Otherwise deserialization will not work.
+
+ManualInjection method is used to prevent having performance lost causing by reflection, this is optional. You can override this method and handle your objects set parameters by yourself and return true, so that manager will not use reflection to set parameters.
 
 ```java 
 public class CustomObject {
