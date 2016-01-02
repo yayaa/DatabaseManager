@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.yayandroid.databasemanager.model.Query;
-import com.yayandroid.databasemanager.utility.DBMUtils;
+import com.yayandroid.databasemanager.utility.InjectionManager;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -60,10 +60,23 @@ public abstract class QueryListener<T> {
     }
 
     /**
+     * This method is provided just because if you don't want to use reflection
+     * to set your custom objects in concern of performance
+     *
+     * @param object Current object which needs to be set its params
+     * @param cursor Current cursor object to get values and set it to given object
+     * @return True if you handle, false otherwise. And if you return false,
+     * this method will not be called again for the running query
+     */
+    public boolean manualInjection(T object, Cursor cursor) {
+        return false;
+    }
+
+    /**
      * Do not override unless you know what to do!
      */
     public void onCursorReceived(final Query query, Cursor cursor) {
-        final ArrayList<T> list = DBMUtils.getListFromCursor(getClassByType(), cursor);
+        final ArrayList<T> list = new InjectionManager<T>(getClassByType(), this, cursor).getListFromCursor();
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override

@@ -4,10 +4,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.yayandroid.databasemanager.model.Database;
 import com.yayandroid.databasemanager.model.Query;
-import com.yayandroid.databasemanager.utility.DBMUtils;
+import com.yayandroid.databasemanager.utility.InjectionManager;
 
 import java.util.ArrayList;
 
@@ -96,7 +97,7 @@ public class DatabaseManager {
             } while (c.moveToNext());
         }
 
-        DBMUtils.logI("## Tables in " + databaseTag + "##\n" + tables.toString());
+        Log.i("DatabaseManager", "## Tables in " + databaseTag + "##\n" + tables.toString());
     }
 
     /**
@@ -143,7 +144,8 @@ public class DatabaseManager {
      * @return Returns an arrayList which consists of instances of given class
      */
     public <T> ArrayList<T> selectSync(Class<T> clazz, Query query) {
-        return DBMUtils.getListFromCursor(clazz, getDatabaseByTag(query.getDatabaseTag()).get().rawQuery(query.getQuery(), query.getArgs()));
+        Cursor cursor = getDatabaseByTag(query.getDatabaseTag()).get().rawQuery(query.getQuery(), query.getArgs());
+        return new InjectionManager<T>(clazz, query.getListener(), cursor).getListFromCursor();
     }
 
     /**

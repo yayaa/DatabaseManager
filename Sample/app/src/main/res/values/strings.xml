@@ -5,6 +5,7 @@
     <string name="add_ticket">Add New Ticket</string>
     <string name="read_only">ReadOnly!</string>
     <string name="delete">Delete</string>
+    <string name="use_reflection">Use Reflection</string>
 
     <string name="db_local">Local Database</string>
     <string name="db_assets">Assets Database</string>

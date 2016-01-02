@@ -1,31 +1,48 @@
 package com.yayandroid.databasemanager.utility;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.yayandroid.databasemanager.annotation.ColumnName;
+import com.yayandroid.databasemanager.listener.QueryListener;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- * Created by Yahya Bayramoglu on 30/12/15.
+ * Created by Yahya Bayramoglu on 02/01/16.
  */
-public class DBMUtils {
+public class InjectionManager<T> {
 
-    private static final String TAG = "DatabaseManager";
+    private QueryListener listener;
+    private Class<T> clazz;
+    private Field[] fields;
+    private String[] columnNames;
+    private Cursor cursor;
+    private boolean manualInjectionIsOn = true;
 
-    public static void logI(String message) {
-        Log.i(TAG, message);
+    public InjectionManager(Class<T> clazz, QueryListener listener, Cursor cursor) {
+        this.listener = listener;
+        this.clazz = clazz;
+        this.cursor = cursor;
     }
 
-    public static <T> ArrayList<T> getListFromCursor(Class<T> clazz, Cursor cursor) {
+    public ArrayList<T> getListFromCursor() {
         ArrayList<T> list = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
                 try {
                     T item = clazz.newInstance();
-                    deserializeInto(item, cursor);
+
+                    boolean objectHandledManually = false;
+                    if (manualInjectionIsOn && listener != null) {
+                        objectHandledManually = listener.manualInjection(item, cursor);
+                    }
+
+                    if (!objectHandledManually) {
+                        manualInjectionIsOn = false;
+                        deserializeInto(item, cursor);
+                    }
+
                     list.add(item);
                 } catch (InstantiationException e) {
                     e.printStackTrace();
@@ -41,9 +58,9 @@ public class DBMUtils {
         return list;
     }
 
-    public static <T> void deserializeInto(T item, Cursor cursor) {
-        Field[] fields = item.getClass().getDeclaredFields();
-        String[] columnNames = cursor.getColumnNames();
+    public void deserializeInto(T item, Cursor cursor) {
+        Field[] fields = getFields(item);
+        String[] columnNames = getColumnNames(cursor);
         for (int i = 0; i < columnNames.length; i++) {
             for (int j = 0; j < fields.length; j++) {
                 if (compareFieldColumn(fields[j], columnNames[i])) {
@@ -59,7 +76,7 @@ public class DBMUtils {
         }
     }
 
-    private static boolean compareFieldColumn(Field field, String columnName) {
+    private boolean compareFieldColumn(Field field, String columnName) {
         if (field.getName().equals(columnName)) {
             return true;
         }
@@ -69,6 +86,20 @@ public class DBMUtils {
             return false;
         else
             return annotation.value().equals(columnName);
+    }
+
+    private Field[] getFields(T item) {
+        if (fields == null) {
+            fields = item.getClass().getDeclaredFields();
+        }
+        return fields;
+    }
+
+    private String[] getColumnNames(Cursor cursor) {
+        if (columnNames == null) {
+            columnNames = cursor.getColumnNames();
+        }
+        return columnNames;
     }
 
 }

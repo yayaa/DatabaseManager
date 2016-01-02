@@ -31,5 +31,5 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
-    compile 'com.yayandroid:DatabaseManager:1.0.0'
+    compile 'com.yayandroid:DatabaseManager:1.0.1'
 }

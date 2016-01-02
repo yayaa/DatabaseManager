@@ -44,5 +44,14 @@
             android:gravity="center"
             android:onClick="compareClick"
             android:text="@string/compare_databases" />
+
+        <View style="@style/DividerStyle" />
+
+        <CheckBox
+            android:id="@+id/useReflectionCheck"
+            style="@style/TextButtonStyle"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:checked="true"
+            android:text="@string/use_reflection" />
     </LinearLayout>
 </RelativeLayout>

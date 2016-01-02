@@ -1,5 +1,6 @@
 package com.yayandroid.databasemanager.sample.activity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -118,6 +119,17 @@ public class DBListActivity extends BaseActivity {
     };
 
     private QueryListener ticketsListener = new QueryListener<Ticket>(true) {
+
+        @Override
+        public boolean manualInjection(Ticket object, Cursor cursor) {
+            if (getUseReflection()) {
+                object.setId(cursor.getString(0));
+                object.setDate(cursor.getString(1));
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         @Override
         public void onListReceived(ArrayList<Ticket> result) {

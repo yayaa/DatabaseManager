@@ -34,8 +34,16 @@ public class Ticket implements Parcelable {
         this.date = in.readString();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDate() {

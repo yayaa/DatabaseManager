@@ -13,11 +13,18 @@ import com.yayandroid.databasemanager.sample.SampleApplication;
 public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
-
     private final boolean PROGRESS_CANCELABLE = false;
 
     protected DatabaseManager getDatabaseManager() {
         return ((SampleApplication) getApplication()).getDatabaseManager();
+    }
+
+    protected void setUseReflection(boolean enabled) {
+        ((SampleApplication) getApplication()).setUseReflection(enabled);
+    }
+
+    protected boolean getUseReflection() {
+        return ((SampleApplication) getApplication()).getUseReflection();
     }
 
     public void displayProgress() {

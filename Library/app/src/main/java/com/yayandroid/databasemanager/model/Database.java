@@ -3,8 +3,8 @@ package com.yayandroid.databasemanager.model;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.yayandroid.databasemanager.utility.DBMUtils;
 import com.yayandroid.databasemanager.DatabaseManager;
 
 import java.io.File;
@@ -113,7 +113,7 @@ public class Database {
     private boolean exists() {
         File file = new File(path);
         if (file.exists()) {
-            DBMUtils.logI("Database found in path: " + path);
+            Log.i("DatabaseManager", "Database found in path: " + path);
             return true;
         } else {
             return false;

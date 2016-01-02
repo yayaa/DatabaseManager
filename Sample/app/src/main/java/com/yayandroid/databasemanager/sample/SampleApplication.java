@@ -16,6 +16,7 @@ import java.io.File;
  */
 public class SampleApplication extends Application {
 
+    private boolean useReflection = true;
     private DatabaseManager dbManager;
 
     @Override
@@ -47,6 +48,14 @@ public class SampleApplication extends Application {
 
     public DatabaseManager getDatabaseManager() {
         return dbManager;
+    }
+
+    public void setUseReflection(boolean enabled) {
+        this.useReflection = enabled;
+    }
+
+    public boolean getUseReflection() {
+        return useReflection;
     }
 
 }
