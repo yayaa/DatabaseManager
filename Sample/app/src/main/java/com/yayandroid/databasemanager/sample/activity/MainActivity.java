@@ -72,11 +72,11 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean manualInjection(Ticket object, Cursor cursor) {
             if (getUseReflection()) {
+                return false;
+            } else {
                 object.setId(cursor.getString(0));
                 object.setDate(cursor.getString(1));
                 return true;
-            } else {
-                return false;
             }
         }
 
