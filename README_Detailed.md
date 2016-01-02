@@ -66,8 +66,9 @@ Via this method, you can determine database to open as readOnly or readWrite. Bu
 
 ```html 
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ``` 
-If you are going to read database from DISC, do not forget to add this permission to the manifest file.
+If you are going to read/write database from DISC, do not forget to add these permissions to the manifest file.
 
 **Query**
 
