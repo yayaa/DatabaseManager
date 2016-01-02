@@ -23,7 +23,9 @@ public class InjectionManager<T> {
     public InjectionManager(Class<T> clazz, QueryListener listener, Cursor cursor) {
         this.listener = listener;
         this.clazz = clazz;
+        this.fields = clazz.getDeclaredFields();
         this.cursor = cursor;
+        this.columnNames = cursor.getColumnNames();
     }
 
     public ArrayList<T> getListFromCursor() {
@@ -59,8 +61,6 @@ public class InjectionManager<T> {
     }
 
     public void deserializeInto(T item, Cursor cursor) {
-        Field[] fields = getFields(item);
-        String[] columnNames = getColumnNames(cursor);
         for (int i = 0; i < columnNames.length; i++) {
             for (int j = 0; j < fields.length; j++) {
                 if (compareFieldColumn(fields[j], columnNames[i])) {
@@ -86,20 +86,6 @@ public class InjectionManager<T> {
             return false;
         else
             return annotation.value().equals(columnName);
-    }
-
-    private Field[] getFields(T item) {
-        if (fields == null) {
-            fields = item.getClass().getDeclaredFields();
-        }
-        return fields;
-    }
-
-    private String[] getColumnNames(Cursor cursor) {
-        if (columnNames == null) {
-            columnNames = cursor.getColumnNames();
-        }
-        return columnNames;
     }
 
 }
