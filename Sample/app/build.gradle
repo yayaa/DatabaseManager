@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -31,5 +31,5 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
-    compile 'com.yayandroid:DatabaseManager:1.0.1'
+    compile 'com.yayandroid:DatabaseManager:1.0.2'
 }
