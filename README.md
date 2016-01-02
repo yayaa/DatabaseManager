@@ -46,7 +46,7 @@ Add library dependency to your `build.gradle` file:
 
 ```groovy
 dependencies {    
-     compile 'com.yayandroid:DatabaseManager:1.0.1'
+     compile 'com.yayandroid:DatabaseManager:1.0.2'
 }
 ```
 
