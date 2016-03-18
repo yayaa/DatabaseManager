@@ -46,9 +46,12 @@ Add library dependency to your `build.gradle` file:
 
 ```groovy
 dependencies {    
-     compile 'com.yayandroid:DatabaseManager:1.0.2'
+     compile 'com.yayandroid:DatabaseManager:1.0.3'
 }
 ```
+
+## TODO
+Instead of creating a new thread for every request, create a HandlerThread in DatabaseManager and run every request on it.
 
 ## License
 ```
@@ -76,4 +79,4 @@ THE SOFTWARE.
 ```
 
 [1]: https://github.com/realm/realm-java
-[2]: http://yayandroid.com/2016/01/databasemanager/
+[2]: http://yayandroid.com/databasemanager/
