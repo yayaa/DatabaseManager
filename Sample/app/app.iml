@@ -74,7 +74,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.yayandroid/DatabaseManager/1.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.yayandroid/DatabaseManager/1.0.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -95,7 +95,7 @@
     <orderEntry type="library" exported="" name="sqliteassethelper-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.1" level="project" />
-    <orderEntry type="library" exported="" name="DatabaseManager-1.0.2" level="project" />
+    <orderEntry type="library" exported="" name="DatabaseManager-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
   </component>

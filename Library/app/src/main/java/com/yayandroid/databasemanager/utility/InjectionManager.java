@@ -48,8 +48,14 @@ public class InjectionManager<T> {
                     list.add(item);
                 } catch (InstantiationException e) {
                     e.printStackTrace();
+                    
+                    // If creating new instance is not possible, then break the loop
+                    break;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+
+                    // If creating new instance is not possible, then break the loop
+                    break;
                 }
             } while (cursor.moveToNext());
 

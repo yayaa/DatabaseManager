@@ -25,9 +25,12 @@ public class SampleApplication extends Application {
 
         dbManager = new DatabaseManager();
 
-        // Add local database to manager
-        dbManager.addDatabase(new Database.Builder(Database.LOCAL, Constants.DB_TAG_LOCAL)
-                .openWith(new DbOpenHelperLocal(getApplicationContext()))
+        // Add database from disc
+        // TODO: Please place the given tickets_disc.s3db file into your root folder
+        // So the sample application reach that out, otherwise it will crash!
+        dbManager.addDatabase(new Database.Builder(Database.DISC, Constants.DB_TAG_DISC)
+                .path(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "tickets_disc.s3db")
+                .openFlags(SQLiteDatabase.OPEN_READONLY)
                 .build());
 
         // Add database from assets folder, because we will be providing an openHelper
@@ -37,12 +40,9 @@ public class SampleApplication extends Application {
                 .path(getApplicationInfo().dataDir + "/databases/tickets_assets.s3db")
                 .build());
 
-        // Add database from disc
-        // TODO: Please place the given tickets_disc.s3db file into your root folder
-        // So the sample application reach that out, otherwise it will crash!
-        dbManager.addDatabase(new Database.Builder(Database.DISC, Constants.DB_TAG_DISC)
-                .path(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "tickets_disc.s3db")
-                .openFlags(SQLiteDatabase.OPEN_READONLY)
+        // Add local database to manager
+        dbManager.addDatabase(new Database.Builder(Database.LOCAL, Constants.DB_TAG_LOCAL)
+                .openWith(new DbOpenHelperLocal(getApplicationContext()))
                 .build());
     }
 

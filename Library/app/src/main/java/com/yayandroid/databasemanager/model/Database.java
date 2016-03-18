@@ -2,6 +2,7 @@ package com.yayandroid.databasemanager.model;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -32,12 +33,12 @@ public class Database {
      */
     public static final int LOCAL = 2;
 
+    @IntDef({DISC, LOCAL})
+    public @interface Type {
+    }
+
     private Database(Builder builder) {
         this.type = builder.type;
-        if (type != DISC && type != LOCAL) {
-            throw new IllegalArgumentException("Not acceptable database type. Please use one of DISC or LOCAL types.");
-        }
-
         this.path = builder.path;
         this.tag = builder.tag;
         this.openFlags = builder.openFlags;
@@ -93,6 +94,10 @@ public class Database {
                     break;
                 }
             }
+
+            if (database == null) {
+                throw new RuntimeException("Check the database configurations, it fails to open any database with given attributes.");
+            }
         }
         return database;
     }
@@ -136,7 +141,7 @@ public class Database {
          * @param type        Declare where the required database is stored
          *                    {@link Database#DISC} || {@link Database#LOCAL}
          */
-        public Builder(int type, String databaseTag) {
+        public Builder(@Type int type, String databaseTag) {
             this.type = type;
             this.tag = databaseTag;
         }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Yahya Bayramoglu on 29/12/15.
  */
-public abstract class QueryListener<T> {
+public class QueryListener<T> {
 
     private boolean returnAsList = false;
     private Class<T> type;

@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -18,12 +18,9 @@ android {
     }
 }
 
-ext {
-    supportLibVersion = '23.1.1'
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-annotations:23.1.1'
 }
 
 apply from: '../maven_push.gradle'

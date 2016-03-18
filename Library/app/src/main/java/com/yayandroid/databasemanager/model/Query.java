@@ -46,7 +46,7 @@ public class Query {
      * @param args Required variables in query string
      */
     public Query withArgs(String... args) {
-        this.args = args;
+        this.args = args.clone();
         for (int i = 0; i < args.length; i++) {
             if (args[i] == null) {
                 args[i] = "";
@@ -80,12 +80,14 @@ public class Query {
     }
 
     private String getPlaceHolders(int count) {
-        String placeHolder = "";
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            placeHolder += " ?,";
+            builder.append("?");
+            if (i != count - 1) {
+                builder.append(",");
+            }
         }
-        placeHolder = placeHolder.substring(0, placeHolder.length() - 1);
-        return placeHolder;
+        return builder.toString();
     }
 
 }
