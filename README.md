@@ -161,9 +161,6 @@ dependencies {
 }
 ```
 
-## TODO
-Instead of creating a new thread for every request, create a HandlerThread in DatabaseManager and run every request on it.
-
 ## License
 ```
 The MIT License (MIT)
