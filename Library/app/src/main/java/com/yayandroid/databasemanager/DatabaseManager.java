@@ -11,6 +11,12 @@ import com.yayandroid.databasemanager.model.Query;
 import com.yayandroid.databasemanager.utility.InjectionManager;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Create a single instance of DatabaseManager, most eligible way in application class,
@@ -22,10 +28,12 @@ import java.util.ArrayList;
  */
 public class DatabaseManager {
 
-    private ArrayList<Database> databases;
+    private final List<Database> databases;
+    private ThreadPoolExecutor executor;
+    private static final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
 
     public DatabaseManager() {
-        this.databases = new ArrayList<>();
+        databases = new ArrayList<>();
     }
 
     /**
@@ -104,13 +112,13 @@ public class DatabaseManager {
      * Executes a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
      */
     public void execute(final Query query) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 getDatabaseByTag(query.getDatabaseTag()).get().execSQL(query.getQuery(), query.getArgs());
                 notifyListenerAsCompleted(query);
             }
-        }).start();
+        });
     }
 
     /**
@@ -124,7 +132,7 @@ public class DatabaseManager {
      * Executes a SELECT query and returns to queryListener if set
      */
     public void select(final Query query) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 Cursor cursor = getDatabaseByTag(query.getDatabaseTag()).get()
@@ -133,7 +141,7 @@ public class DatabaseManager {
                     query.getListener().onCursorReceived(query, cursor);
                 }
             }
-        }).start();
+        });
     }
 
     /**
@@ -157,7 +165,7 @@ public class DatabaseManager {
      * @param databaseTagToMerge Database tag which is required for this query
      */
     public void selectByMerged(final Query query, final String databaseTagToMerge) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 Database queryDB = getDatabaseByTag(query.getDatabaseTag());
@@ -172,7 +180,7 @@ public class DatabaseManager {
 
                 queryDB.get().execSQL("detach database ?", new String[]{databaseTagToMerge});
             }
-        }).start();
+        });
     }
 
     /**
@@ -208,27 +216,27 @@ public class DatabaseManager {
      * @param insertQuery Query object to insert to database
      */
     public void deleteAndInsert(final Query deleteQuery, final Query insertQuery) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 deleteSync(deleteQuery);
                 insertSync(insertQuery);
                 notifyListenerAsCompleted(insertQuery);
             }
-        }).start();
+        });
     }
 
     /**
      * Executes given INSERT statement
      */
     public void insert(final Query query) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 insertSync(query);
                 notifyListenerAsCompleted(query);
             }
-        }).start();
+        });
     }
 
     /**
@@ -270,13 +278,13 @@ public class DatabaseManager {
     }
 
     private void updateOrDelete(final Query query) {
-        new Thread(new Runnable() {
+        getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 updateOrDeleteSync(query);
                 notifyListenerAsCompleted(query);
             }
-        }).start();
+        });
     }
 
     private int updateOrDeleteSync(Query query) {
@@ -295,6 +303,15 @@ public class DatabaseManager {
                 }
             });
         }
+    }
+
+    private Executor getExecutor() {
+        if (executor == null) {
+            // LinkedBlockingQueue is because we need FIFO
+            BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
+            executor = new ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES, 0L, TimeUnit.MILLISECONDS, taskQueue);
+        }
+        return executor;
     }
 
 }
