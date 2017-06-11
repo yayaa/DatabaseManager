@@ -4,8 +4,8 @@
 
 <a href="http://www.methodscount.com/?lib=com.yayandroid%3ADatabaseManager%3A1.0.0" target="_blank"><img src="https://img.shields.io/badge/Methods count-139-e91e63.svg"></img></a> <a href="http://www.methodscount.com/?lib=com.yayandroid%3ADatabaseManager%3A1.0.0" target="_blank"><img src="https://img.shields.io/badge/Size-18 KB-e91e63.svg"></img></a>
 
-### This library is no longer maintained
- 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Database usage on mobile platforms may not be extensive but at some point, it is required. Android platform supports SQLite usage in your code base, but you have a lot to do! So i created this library to make database management easier. 
 
 P.S.: I strongly recommend you to use [Realm][1] if it suits your requirements though.
